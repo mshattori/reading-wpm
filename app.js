@@ -1,30 +1,46 @@
 const textArea = document.querySelector('textarea');
 const textDisplay = document.querySelector('#text-display');
-const startBtn = document.querySelector('#start-btn');
-const stopBtn = document.querySelector('#stop-btn');
+const triggerBtn = document.querySelector('#trigger-btn');
 const cancelBtn = document.querySelector('#cancel-btn');
 const resultDiv = document.querySelector('#result');
 
+let isTestRunning = false;
 let startTime;
 let wordCount;
 
-textArea.addEventListener('input', updateTextDisplay);
+textArea.addEventListener('keydown', updateTextDisplay);
 
-startBtn.addEventListener('click', startTest);
-stopBtn.addEventListener('click', stopTest);
-cancelBtn.addEventListener('click', cancelTest);
+triggerBtn.addEventListener('click', trigger);
+cancelBtn.addEventListener('click', cancel);
 
-function updateTextDisplay() {
-    textDisplay.textContent = textArea.value;
+function updateTextDisplay(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        textDisplay.textContent = textArea.value;
+        toggleDisplay(textArea);
+        toggleDisplay(textDisplay);
+        triggerBtn.disabled = false;
+        cancelBtn.disabled = false;
+    }
+}
+
+function trigger() {
+    if (!isTestRunning) {
+        startTest();
+        isTestRunning = true;
+    } else {
+        stopTest();
+        isTestRunning = false;
+    }
 }
 
 function startTest() {
     startTime = new Date().getTime();
     wordCount = countWords(textArea.value);
 
-    startBtn.disabled = true;
-    stopBtn.disabled = false;
-    cancelBtn.disabled = false;
+    triggerBtn.textContent = 'Stop';
+    cancelBtn.textContent = 'Cancel';
+    resultDiv.textContent = '';
 }
 
 function stopTest() {
@@ -34,16 +50,31 @@ function stopTest() {
 
     resultDiv.textContent = `Your reading speed is ${wpm} words per minute.`;
 
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
+    triggerBtn.textContent = 'Start';
+    cancelBtn.textContent = 'Clear';
+}
+
+function cancel() {
+    if (!isTestRunning) {
+        clearText();
+    } else {
+        cancelTest();
+        isTestRunning = false;
+    }
+}
+
+function clearText() {
+    textArea.value = '';
+    textDisplay.textContent = '';
+    toggleDisplay(textArea);
+    toggleDisplay(textDisplay);
+    triggerBtn.disabled = true;
     cancelBtn.disabled = true;
 }
 
 function cancelTest() {
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-    cancelBtn.disabled = true;
-    resultDiv.textContent = '';
+    triggerBtn.textContent = 'Start';
+    cancelBtn.textContent = 'Clear';
 }
 
 function countWords(text) {
@@ -54,4 +85,8 @@ function countWords(text) {
 function calculateWPM(wordCount, elapsedTime) {
     const wordsPerMinute = wordCount / (elapsedTime / 60);
     return Math.round(wordsPerMinute);
+}
+
+function toggleDisplay(element) {
+    element.style.display = element.style.display === 'none' ? 'block' : 'none';
 }
