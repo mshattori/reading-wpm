@@ -48,7 +48,8 @@ function stopTest() {
     const elapsedTime = (endTime - startTime) / 1000; // Convert to seconds
     const wpm = calculateWPM(wordCount, elapsedTime);
 
-    resultDiv.textContent = `Your reading speed is ${wpm} words per minute.`;
+    seconds = Math.floor(elapsedTime)
+    resultDiv.textContent = `Reading speed: ${wpm} wpm (${wordCount} words / ${seconds} seconds)`;
 
     triggerBtn.textContent = 'Start';
     cancelBtn.textContent = 'Clear';
