@@ -16,7 +16,8 @@ cancelBtn.addEventListener('click', cancel);
 function updateTextDisplay(e) {
     if (e.key === 'Enter') {
         e.preventDefault();
-        textDisplay.textContent = textArea.value;
+        // Preserve line breaks
+        textDisplay.innerHTML = textArea.value.replace(/\n/g, '<br>');
         toggleDisplay(textArea);
         toggleDisplay(textDisplay);
         triggerBtn.disabled = false;
