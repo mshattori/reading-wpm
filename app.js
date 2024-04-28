@@ -8,21 +8,25 @@ let isTestRunning = false;
 let startTime;
 let wordCount;
 
-textArea.addEventListener('keydown', updateTextDisplay);
+textArea.addEventListener('keydown', onKeydown);
 
 triggerBtn.addEventListener('click', trigger);
 cancelBtn.addEventListener('click', cancel);
 
-function updateTextDisplay(e) {
-    if (e.key === 'Enter') {
+function onKeydown(e) {
+    if (e.key === 'Enter' && e.shiftKey == false) {
         e.preventDefault();
-        // Preserve line breaks
-        textDisplay.innerHTML = textArea.value.replace(/\n/g, '<br>');
-        toggleDisplay(textArea);
-        toggleDisplay(textDisplay);
-        triggerBtn.disabled = false;
-        cancelBtn.disabled = false;
+        updateTextDisplay();
     }
+}
+
+function updateTextDisplay() {
+    // Preserve line breaks
+    textDisplay.innerHTML = textArea.value.replace(/\n/g, '<br>');
+    toggleDisplay(textArea);
+    toggleDisplay(textDisplay);
+    triggerBtn.disabled = false;
+    cancelBtn.disabled = false;
 }
 
 function trigger() {
