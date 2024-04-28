@@ -33,6 +33,17 @@
             line-height: 1.5;
         }
 
+        .button-container {
+            width: 100%;
+            max-width: 960px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        #trigger-btn {
+            margin-left: auto;
+        }
+
         button {
             margin: 10px 5px;
             padding: 10px 20px;
@@ -57,9 +68,10 @@
 <body>
     <textarea placeholder="Paste your text here"></textarea>
     <div id="text-display" style="display: none;"></div>
-    <div>
-        <button id="trigger-btn" disabled>Start</button>
+    <div class="button-container">
+        <button id="save-btn">Save</button>
         <button id="cancel-btn" disabled>Clear</button>
+        <button id="trigger-btn" disabled>Start</button>
     </div>
     <div id="result"></div>
 

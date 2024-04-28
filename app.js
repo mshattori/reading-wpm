@@ -1,5 +1,6 @@
 const textArea = document.querySelector('textarea');
 const textDisplay = document.querySelector('#text-display');
+const saveBtn = document.querySelector('#save-btn');
 const triggerBtn = document.querySelector('#trigger-btn');
 const cancelBtn = document.querySelector('#cancel-btn');
 const resultDiv = document.querySelector('#result');
@@ -9,7 +10,7 @@ let startTime;
 let wordCount;
 
 textArea.addEventListener('keydown', onKeydown);
-
+saveBtn.addEventListener('click', updateTextDisplay);
 triggerBtn.addEventListener('click', trigger);
 cancelBtn.addEventListener('click', cancel);
 
@@ -21,12 +22,15 @@ function onKeydown(e) {
 }
 
 function updateTextDisplay() {
-    // Preserve line breaks
-    textDisplay.innerHTML = textArea.value.replace(/\n/g, '<br>');
-    toggleDisplay(textArea);
-    toggleDisplay(textDisplay);
-    triggerBtn.disabled = false;
-    cancelBtn.disabled = false;
+    if (textArea.value.trim() !== '') {
+        // Preserve line breaks
+        textDisplay.innerHTML = textArea.value.replace(/\n/g, '<br>');
+        toggleDisplay(textArea);
+        toggleDisplay(textDisplay);
+        saveBtn.disabled = true;
+        triggerBtn.disabled = false;
+        cancelBtn.disabled = false;
+    }
 }
 
 function trigger() {
@@ -72,8 +76,10 @@ function cancel() {
 function clearText() {
     textArea.value = '';
     textDisplay.textContent = '';
+    resultDiv.textContent = '';
     toggleDisplay(textArea);
     toggleDisplay(textDisplay);
+    saveBtn.disabled = false;
     triggerBtn.disabled = true;
     cancelBtn.disabled = true;
 }
