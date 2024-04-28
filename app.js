@@ -15,6 +15,9 @@ triggerBtn.addEventListener('click', trigger);
 cancelBtn.addEventListener('click', cancel);
 
 function onKeydown(e) {
+    if (window.matchMedia('(max-width: 600px)').matches) {
+        return;
+    }
     if (e.key === 'Enter' && e.shiftKey == false) {
         e.preventDefault();
         updateTextDisplay();
