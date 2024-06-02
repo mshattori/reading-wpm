@@ -93,7 +93,7 @@ function cancelTest() {
 }
 
 function countWords(text) {
-    const words = text.trim().split(/\s+/);
+    const words = text.trim().split(/\s+/).filter(word => word !== '/');
     return words.length;
 }
 
