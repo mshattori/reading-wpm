@@ -1,0 +1,52 @@
+/* Reading WPM Checker styles*/
+textarea {
+    width: 100%;
+    max-width: 960px;
+    height: 80vh;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 20px;
+    background-color: #fafafa;
+    color: #555;
+}
+
+#text-display {
+    width: 100%;
+    max-width: 960px;
+    height: 80vh;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    overflow: auto;
+    font-size: 20px;
+    background-color: #fafafa;
+    line-height: 1.5;
+}
+
+#control-area {
+    height: 20vh;
+}
+
+.button-container {
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#trigger-btn {
+    margin-left: auto;
+}
+
+button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#result {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}

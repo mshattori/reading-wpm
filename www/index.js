@@ -1,3 +1,14 @@
+// Cordova device APIs are avairable after the `deviceready` event
+// Ref. https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
+document.addEventListener('deviceready', onDeviceReady, false);
+
+function onDeviceReady() {
+    if (window.cordova) {
+        console.log('cordova-' + cordova.platformId + '@' + cordova.version);
+        document.getElementById('cordova-css').disabled = false;
+    }
+}
+
 const textArea = document.querySelector('textarea');
 const textDisplay = document.querySelector('#text-display');
 const saveBtn = document.querySelector('#save-btn');
@@ -61,7 +72,7 @@ function stopTest() {
     const wpm = calculateWPM(wordCount, elapsedTime);
 
     seconds = Math.floor(elapsedTime)
-    resultDiv.textContent = `Reading speed: ${wpm} wpm (${wordCount} words / ${seconds} seconds)`;
+    resultDiv.innerHTML = `Reading speed: ${wpm} wpm<br>(${wordCount} words / ${seconds} seconds)`;
 
     triggerBtn.textContent = 'Start';
     cancelBtn.textContent = 'Clear';

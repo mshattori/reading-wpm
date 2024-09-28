@@ -1,80 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
     <title>Reading Speed WPM Tester</title>
     <link rel="stylesheet" href="uikit-3.21.12/css/uikit.min.css" />
     <script src="uikit-3.21.12/js/uikit.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            max-width: 960px;
-            height: 80vh;
-            padding: 10px;
-            box-sizing: border-box;
-            font-size: 18px;
-        }
-
-        #text-display {
-            width: 100%;
-            max-width: 960px;
-            height: 80vh;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            overflow: auto;
-            font-size: 20px;
-            line-height: 1.5;
-        }
-
-        .button-container {
-            width: 100%;
-            max-width: 960px;
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        #trigger-btn {
-            margin-left: auto;
-        }
-
-        button {
-            margin: 10px 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        @media (max-width: 600px) {
-            textarea, #text-display {
-                width: 100%;
-                height: 80vh;
-                font-size: 18px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="cordova.css" id="cordova-css" disabled>
 </head>
 <body>
     <textarea placeholder="Paste your text here"></textarea>
     <div id="text-display" style="display: none;"></div>
-    <div class="button-container">
-        <button id="save-btn">Save</button>
-        <button id="cancel-btn" disabled>Clear</button>
-        <button id="trigger-btn" disabled>Start</button>
+    <div id="control-area">
+        <div class="button-container">
+            <button id="save-btn">Save</button>
+            <button id="cancel-btn" disabled>Clear</button>
+            <button id="trigger-btn" disabled>Start</button>
+        </div>
+        <div id="result"></div>
     </div>
-    <div id="result"></div>
 
+    <script src="cordova.js"></script>
     <script src="index.js"></script>
 </body>
 </html>

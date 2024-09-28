@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.mshattori.readingwpm" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>WPM Checker</name>
+    <description>Reading WPM Speed Checker</description>
+    <author email="mshattori@gmail.com">mshattori</author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+
+    <platform name="android">
+        <!--
+            ldpi    : 36x36 px
+            mdpi    : 48x48 px
+            hdpi    : 72x72 px
+            xhdpi   : 96x96 px
+            xxhdpi  : 144x144 px
+            xxxhdpi : 192x192 px
+        -->
+        <icon src="res/icon/android/Icon-36.png" density="ldpi" />
+        <icon src="res/icon/android/Icon-48.png" density="mdpi" />
+        <icon src="res/icon/android/Icon-72.png" density="hdpi" />
+        <icon src="res/icon/android/Icon-96.png" density="xhdpi" />
+        <icon src="res/icon/android/Icon-144.png" density="xxhdpi" />
+        <icon src="res/icon/android/Icon-192.png" density="xxxhdpi" />
+
+        <resource-file src="res/screen/splash.png" target="app/src/main/res/drawable/splash.png" /> <!-- copy splash image to the target path -->
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screen/android/splashscreen.xml" />
+        <preference name="SplashShowOnlyFirstTime" value="false" />
+        <preference name="FadeSplashScreen" value="true" />
+        <preference name="FadeSplashScreenDuration" value="500" />
+    </platform>
+</widget>
