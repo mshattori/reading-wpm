@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 500">
+  <!-- Background -->
+  <rect width="1024" height="500" fill="#87CEEB"/>
+  
+  <!-- WPM Checker Title -->
+  <text x="512" y="100" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="white" text-anchor="middle">WPM Checker</text>
+  
+  <!-- Tagline -->
+  <text x="512" y="150" font-family="Arial, sans-serif" font-size="24" fill="white" text-anchor="middle">Improve Your English Reading Speed</text>
+  
+  <!-- Book Icon -->
+  <path d="M200,250 h100 v150 h-100 z" fill="white"/>
+  <path d="M200,250 q50,-20 100,0" fill="none" stroke="white" stroke-width="2"/>
+  
+  <!-- Stopwatch Icon -->
+  <circle cx="824" cy="325" r="60" fill="white"/>
+  <circle cx="824" cy="325" r="55" fill="#87CEEB"/>
+  <path d="M824,280 v45 h30" stroke="white" stroke-width="4" fill="none"/>
+  
+  <!-- Measure and Boost Text -->
+  <text x="512" y="400" font-family="Arial, sans-serif" font-size="20" fill="white" text-anchor="middle">Measure and Boost Your Words Per Minute</text>
+</svg>
