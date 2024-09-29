@@ -1,4 +1,4 @@
-// Cordova device APIs are avairable after the `deviceready` event
+// Cordova device APIs are available after the `deviceready` event
 // Ref. https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -21,17 +21,40 @@ let startTime;
 let wordCount;
 
 textArea.addEventListener('keydown', onKeydown);
-saveBtn.addEventListener('click', updateTextDisplay);
+textArea.addEventListener('paste', onPaste);
+saveBtn.addEventListener('click', updateTextDisplayOrEdit);
 triggerBtn.addEventListener('click', trigger);
 cancelBtn.addEventListener('click', cancel);
 
+function isTouchDevice() {
+    // devices that correspond to `pointer: coarse` are primarily operated using fingers,
+    // such as smartphones and tablets.
+    return (window.matchMedia('(pointer: coarse)').matches)
+}
+
 function onKeydown(e) {
-    if (window.matchMedia('(max-width: 600px)').matches) {
+    if (isTouchDevice()) {
         return;
     }
+    // you can put new-lines with shift-key
     if (e.key === 'Enter' && e.shiftKey == false) {
         e.preventDefault();
         updateTextDisplay();
+    }
+}
+
+function onPaste(e) {
+    if (isTouchDevice() == false) {
+        return;
+    }
+    setTimeout(updateTextDisplay, 0); // Call updateTextDisplay after paste event is processed
+}
+
+function updateTextDisplayOrEdit() {
+    if (saveBtn.textContent === 'Save') {
+        updateTextDisplay();
+    } else {
+        editTextDisplay();
     }
 }
 
@@ -41,10 +64,18 @@ function updateTextDisplay() {
         textDisplay.innerHTML = textArea.value.replace(/\n/g, '<br>');
         toggleDisplay(textArea);
         toggleDisplay(textDisplay);
-        saveBtn.disabled = true;
+        saveBtn.textContent = 'Edit';
         triggerBtn.disabled = false;
         cancelBtn.disabled = false;
     }
+}
+
+function editTextDisplay() {
+    toggleDisplay(textArea);
+    toggleDisplay(textDisplay);
+    saveBtn.textContent = 'Save';
+    triggerBtn.disabled = true;
+    cancelBtn.disabled = true;
 }
 
 function trigger() {
@@ -64,6 +95,7 @@ function startTest() {
     triggerBtn.textContent = 'Stop';
     cancelBtn.textContent = 'Cancel';
     resultDiv.textContent = '';
+    saveBtn.disabled = true
 }
 
 function stopTest() {
@@ -71,15 +103,17 @@ function stopTest() {
     const elapsedTime = (endTime - startTime) / 1000; // Convert to seconds
     const wpm = calculateWPM(wordCount, elapsedTime);
 
-    seconds = Math.floor(elapsedTime)
+    const seconds = Math.floor(elapsedTime);
 
     triggerBtn.textContent = 'Start';
     cancelBtn.textContent = 'Clear';
+    saveBtn.disabled = false
 
     if (window.cordova) {
         function onConfirm(buttonIndex) {}
-        title = `Reading speed: ${wpm} wpm`
-        message = `(${wordCount} words / ${seconds} seconds)`,
+
+        const title = `Reading speed: ${wpm} wpm`;
+        const message = `(${wordCount} words / ${seconds} seconds)`;
         navigator.notification.confirm(message, onConfirm, title, ['OK']);
     } else {
         resultDiv.innerHTML = `Reading speed: ${wpm} wpm<br>(${wordCount} words / ${seconds} seconds)`;
@@ -101,6 +135,7 @@ function clearText() {
     resultDiv.textContent = '';
     toggleDisplay(textArea);
     toggleDisplay(textDisplay);
+    saveBtn.textContent = 'Save';
     saveBtn.disabled = false;
     triggerBtn.disabled = true;
     cancelBtn.disabled = true;
@@ -109,9 +144,11 @@ function clearText() {
 function cancelTest() {
     triggerBtn.textContent = 'Start';
     cancelBtn.textContent = 'Clear';
+    saveBtn.disabled = false
 }
 
 function countWords(text) {
+    // filter slashes to support slash-reading texts
     const words = text.trim().split(/\s+/).filter(word => word !== '/');
     return words.length;
 }
