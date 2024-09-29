@@ -5,7 +5,8 @@ textarea {
     height: 80vh;
     padding: 10px;
     box-sizing: border-box;
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 1.35rem;
     background-color: #fafafa;
     color: #555;
 }
@@ -18,7 +19,8 @@ textarea {
     box-sizing: border-box;
     border: 1px solid #ccc;
     overflow: auto;
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 1.35rem;
     background-color: #fafafa;
     line-height: 1.5;
 }
@@ -46,7 +48,8 @@ button {
 
 #result {
     margin-top: 10px;
-    font-size: 18px;
+    max-width: 960px;
+    font-size: 1.3rem;
     font-weight: bold;
     text-align: center;
 }
