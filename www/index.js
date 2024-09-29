@@ -72,10 +72,18 @@ function stopTest() {
     const wpm = calculateWPM(wordCount, elapsedTime);
 
     seconds = Math.floor(elapsedTime)
-    resultDiv.innerHTML = `Reading speed: ${wpm} wpm<br>(${wordCount} words / ${seconds} seconds)`;
 
     triggerBtn.textContent = 'Start';
     cancelBtn.textContent = 'Clear';
+
+    if (window.cordova) {
+        function onConfirm(buttonIndex) {}
+        title = `Reading speed: ${wpm} wpm`
+        message = `(${wordCount} words / ${seconds} seconds)`,
+        navigator.notification.confirm(message, onConfirm, title, ['OK']);
+    } else {
+        resultDiv.innerHTML = `Reading speed: ${wpm} wpm<br>(${wordCount} words / ${seconds} seconds)`;
+    }
 }
 
 function cancel() {

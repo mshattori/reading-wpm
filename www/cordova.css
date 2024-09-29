@@ -8,3 +8,16 @@ body {
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     background-color:#E4E4E4;
 }
+
+textarea, #text-display {
+    height: 85vh;
+}
+
+#control-area {
+    height: 15vh;
+}
+
+#result {
+    /* result area is not displayed bacause a dialog is used to display the result */
+    display: none;
+}
