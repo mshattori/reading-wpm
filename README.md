@@ -172,4 +172,3 @@ Google Play Storeに公開するためのAndroid App Bundle (AAB) を作成し�
 ```sh
 cordova build android --release -- --keystore=./keys/upload-keystore.jks --storePassword=`cat keys/passwd.txt` --password=`cat keys/passwd.txt` --alias=upload --packageType=bundle
 ```
-(キーファイルやパスワードは1Passwordに保管)
