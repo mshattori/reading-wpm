@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "cordova-android": "^13.0.0",
+    "cordova-android": "^14.0.1",
     "cordova-plugin-dialogs": "^2.0.2"
   },
   "cordova": {
