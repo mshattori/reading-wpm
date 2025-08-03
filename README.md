@@ -172,3 +172,12 @@ Google Play Storeに公開するためのAndroid App Bundle (AAB) を作成し�
 ```sh
 cordova build android --release -- --keystore=./keys/upload-keystore.jks --storePassword=`cat keys/passwd.txt` --password=`cat keys/passwd.txt` --alias=upload --packageType=bundle
 ```
+
+## Google Play Store 関連
+
+* `store/`: Google Play Storeに掲載するためのスクリーンショットやフィーチャーグラフィックなどの素材が含まれています。
+
+* [https://github.com/mshattori/privacy-policy](https://github.com/mshattori/privacy-policy): reading-wpm プロジェクトのプライバシーポリシーを格納したプロジェクト。
+  - GigHub Pages により <https://mshattori.github.io/privacy-policy/wpm-checker-privacy-policy.html> で WPM Checker アプリのプライバシーポリシーページを公開
+  - Google Play Store のアプリ公開時に必要な法的文書
+  - WPM Checker が個人情報を収集しないことを明記
