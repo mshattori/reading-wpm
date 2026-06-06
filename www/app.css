@@ -1,17 +1,5 @@
-/* Reading WPM Checker styles*/
-textarea {
-    width: 100%;
-    max-width: 960px;
-    height: 80vh;
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 1.35rem;
-    background-color: #fafafa;
-    color: #555;
-    margin: 0 auto;
-    display: block;
-}
-
+/* Reading WPM Checker styles */
+textarea,
 #text-display {
     width: 100%;
     max-width: 960px;
@@ -19,11 +7,23 @@ textarea {
     padding: 10px;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    overflow: auto;
     font-size: 1.35rem;
-    background-color: #fafafa;
     line-height: 1.5;
+    color: #555;
     margin: 0 auto;
+    display: block;
+    overflow: auto;
+    font-family: inherit;
+}
+
+textarea {
+    background-color: #fafafa;
+    resize: none;
+}
+
+#text-display {
+    background-color: #f4f7fb;
+    white-space: pre-wrap;
 }
 
 #control-area {

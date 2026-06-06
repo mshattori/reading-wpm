@@ -11,7 +11,6 @@ function onDeviceReady() {
 
 const textArea = document.querySelector('textarea');
 const textDisplay = document.querySelector('#text-display');
-const saveBtn = document.querySelector('#save-btn');
 const triggerBtn = document.querySelector('#trigger-btn');
 const cancelBtn = document.querySelector('#cancel-btn');
 const resultDiv = document.querySelector('#result');
@@ -20,71 +19,24 @@ let isTestRunning = false;
 let startTime;
 let wordCount;
 
-textArea.addEventListener('keydown', onKeydown);
-textArea.addEventListener('paste', onPaste);
-saveBtn.addEventListener('click', updateTextDisplayOrEdit);
+textArea.addEventListener('input', updateControlState);
 triggerBtn.addEventListener('click', trigger);
 cancelBtn.addEventListener('click', cancel);
-
-function isTouchDevice() {
-    // devices that correspond to `pointer: coarse` are primarily operated using fingers,
-    // such as smartphones and tablets.
-    return (window.matchMedia('(pointer: coarse)').matches)
-}
-
-function onKeydown(e) {
-    if (isTouchDevice()) {
-        return;
-    }
-    // you can put new-lines with shift-key
-    if (e.key === 'Enter' && e.shiftKey == false) {
-        e.preventDefault();
-        updateTextDisplay();
-    }
-}
-
-function onPaste(e) {
-    if (isTouchDevice() == false) {
-        return;
-    }
-    setTimeout(updateTextDisplay, 0); // Call updateTextDisplay after paste event is processed
-}
-
-function updateTextDisplayOrEdit() {
-    if (saveBtn.textContent === 'Save') {
-        updateTextDisplay();
-    } else {
-        editTextDisplay();
-    }
-}
-
-function updateTextDisplay() {
-    if (textArea.value.trim() !== '') {
-        // Preserve line breaks
-        textDisplay.innerHTML = textArea.value.replace(/\n/g, '<br>');
-        toggleDisplay(textArea);
-        toggleDisplay(textDisplay);
-        saveBtn.textContent = 'Edit';
-        triggerBtn.disabled = false;
-        cancelBtn.disabled = false;
-    }
-}
-
-function editTextDisplay() {
-    toggleDisplay(textArea);
-    toggleDisplay(textDisplay);
-    saveBtn.textContent = 'Save';
-    triggerBtn.disabled = true;
-    cancelBtn.disabled = true;
-}
+updateControlState();
 
 function trigger() {
     if (!isTestRunning) {
-        startTest();
+        if (!hasInputText()) {
+            updateControlState();
+            return;
+        }
+
+        showReadingView();
         isTestRunning = true;
+        startTest();
     } else {
-        stopTest();
         isTestRunning = false;
+        stopTest();
     }
 }
 
@@ -95,7 +47,7 @@ function startTest() {
     triggerBtn.textContent = 'Stop';
     cancelBtn.textContent = 'Cancel';
     resultDiv.textContent = '';
-    saveBtn.disabled = true
+    updateControlState();
 }
 
 function stopTest() {
@@ -107,7 +59,8 @@ function stopTest() {
 
     triggerBtn.textContent = 'Start';
     cancelBtn.textContent = 'Clear';
-    saveBtn.disabled = false
+    showEditingView();
+    updateControlState();
 
     if (window.cordova) {
         function onConfirm(buttonIndex) {}
@@ -124,8 +77,8 @@ function cancel() {
     if (!isTestRunning) {
         clearText();
     } else {
-        cancelTest();
         isTestRunning = false;
+        cancelTest();
     }
 }
 
@@ -133,23 +86,25 @@ function clearText() {
     textArea.value = '';
     textDisplay.textContent = '';
     resultDiv.textContent = '';
-    toggleDisplay(textArea);
-    toggleDisplay(textDisplay);
-    saveBtn.textContent = 'Save';
-    saveBtn.disabled = false;
-    triggerBtn.disabled = true;
-    cancelBtn.disabled = true;
+    showEditingView();
+    updateControlState();
 }
 
 function cancelTest() {
     triggerBtn.textContent = 'Start';
     cancelBtn.textContent = 'Clear';
-    saveBtn.disabled = false
+    showEditingView();
+    updateControlState();
 }
 
 function countWords(text) {
+    const trimmedText = text.trim();
+    if (trimmedText === '') {
+        return 0;
+    }
+
     // filter slashes to support slash-reading texts
-    const words = text.trim().split(/\s+/).filter(word => word !== '/');
+    const words = trimmedText.split(/\s+/).filter(word => word !== '/');
     return words.length;
 }
 
@@ -158,6 +113,24 @@ function calculateWPM(wordCount, elapsedTime) {
     return Math.round(wordsPerMinute);
 }
 
-function toggleDisplay(element) {
-    element.style.display = element.style.display === 'none' ? 'block' : 'none';
+function hasInputText() {
+    return textArea.value.trim() !== '';
+}
+
+function showReadingView() {
+    textDisplay.textContent = textArea.value;
+    textArea.style.display = 'none';
+    textDisplay.style.display = 'block';
+}
+
+function showEditingView() {
+    textArea.style.display = 'block';
+    textDisplay.style.display = 'none';
+}
+
+function updateControlState() {
+    const hasText = hasInputText();
+
+    triggerBtn.disabled = !isTestRunning && !hasText;
+    cancelBtn.disabled = !isTestRunning && !hasText;
 }
